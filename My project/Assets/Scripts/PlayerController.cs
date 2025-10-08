@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
         Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
 
         rb.AddForce(movement * speed);
+           
 
         //Restart level
         if (Input.GetKeyDown(KeyCode.R))
@@ -51,24 +52,39 @@ public class PlayerController : MonoBehaviour
         {
             other.gameObject.SetActive(false);
             score++;
+            
             SetScoreText();
-            if (score >= 5)
+            if (score >= 7)
             {
                 gate.gameObject.SetActive(false);
             }
         }
-        if (other.gameObject.CompareTag("Danger"))
+
+        if (other.gameObject.CompareTag("danger"))
         {
-            Application.LoadLevel(Application.loadedLevel);
+            Debug.LogWarning("hit danger");            
         }
+
+        Debug.Log("Touched object with tag: " + other.gameObject.tag);
+
+
     }
     void SetScoreText()
     {
         if (scoreText != null)
             scoreText.text = "Score: " + score.ToString();
 
-        if (score >= 9 && winText != null)
+        if (score >= 15 && winText != null)
             winText.text = "You win, press R to restart or ESC to exit";
+
+           
+            if (scoreText != null)
+            {
+                string newText = "Score: " + score.ToString();
+                scoreText.text = newText;
+                Debug.Log("Updated score text: " + newText);
+            }        
+
     }
 
 }
